@@ -4,12 +4,13 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Amazon.XRay.Recorder.Handlers.System.Net;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace TodoApiWithTrace.Controllers
 {
-    public class MyController : ControllerBase
+    public class AwsController : ControllerBase
     {
         private static readonly ActivitySource Activity = new ActivitySource(nameof(MyController));
         private static readonly string[] Summaries = new[]
@@ -19,7 +20,7 @@ namespace TodoApiWithTrace.Controllers
 
         private readonly ILogger<WeatherForecastController> _logger;
 
-        public MyController(ILogger<WeatherForecastController> logger)
+        public AwsController(ILogger<WeatherForecastController> logger)
         {
             _logger = logger;
         }
@@ -27,7 +28,7 @@ namespace TodoApiWithTrace.Controllers
         [HttpGet]
         public async Task<string> RandomUser()
         {
-            var client = new HttpClient();
+            var client = new HttpClient(new HttpClientXRayTracingHandler(new HttpClientHandler()));
             var response = await client.GetAsync("https://randomuser.me/api/");
             var responseStr = await response.Content.ReadAsStringAsync();
             return responseStr;

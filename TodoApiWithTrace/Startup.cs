@@ -50,13 +50,14 @@ namespace TodoApiWithTrace
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseXRay("App");
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
                 endpoints.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllers();
             });
         }
     }
