@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Amazon.XRay.Recorder.Handlers.System.Net;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Amazon.XRay.Recorder.Core;
 
 namespace TodoApiWithTrace.Controllers
 {
@@ -36,14 +37,15 @@ namespace TodoApiWithTrace.Controllers
 
         public async Task<string> DetailedTrace()
         {
-            using (var ac = Activity.StartActivity("UsingService"))
-            {
-                _logger.LogWarning("Service Executed Here");
-                using (var ac2 = Activity.StartActivity("UsingRepository"))
-                {
-                    _logger.LogWarning("Repositry Executed here");
-                }
-            }
+            AWSXRayRecorder.Instance.BeginSubsegment("UsingService");
+            // Service code
+            _logger.LogWarning("Service Executed Here");
+            AWSXRayRecorder.Instance.BeginSubsegment("UsingRepo");
+            // Repo code
+            _logger.LogWarning("Repositry Executed here");
+
+            AWSXRayRecorder.Instance.EndSubsegment();
+            AWSXRayRecorder.Instance.EndSubsegment();
             return "Hello tracing!";
         }
     }
