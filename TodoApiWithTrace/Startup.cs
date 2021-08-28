@@ -32,7 +32,7 @@ namespace TodoApiWithTrace
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TodoApiWithTrace", Version = "v1" });
             });
-            AllTheTrace.InstallTracingInServices(services);
+            AllTheTrace.InstallOpenTelemetryTracing(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
