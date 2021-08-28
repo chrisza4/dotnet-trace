@@ -12,6 +12,7 @@ namespace TodoApiWithTrace
                     .AddAspNetCoreInstrumentation()
                     .AddJaegerExporter()
                     .AddConsoleExporter()
+                    .AddHttpClientInstrumentation()
                 );
         }
     }
