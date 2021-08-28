@@ -3,5 +3,5 @@
 ## Todo
 
 - [x] Custom Instrumentation in OpenTelemetry
-- [ ] XRay Instrumentation
+- [x] XRay Instrumentation
 - [ ] Multiple Lambda Call
