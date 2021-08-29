@@ -7,6 +7,7 @@
   <ItemGroup>
     <PackageReference Include="Amazon.Lambda.AspNetCoreServer" Version="6.0.3" />
     <PackageReference Include="Amazon.Lambda.Core" Version="2.0.0" />
+    <PackageReference Include="AWSSDK.Lambda" Version="3.7.3.5" />
     <PackageReference Include="AWSXRayRecorder.Handlers.AspNetCore" Version="2.7.3" />
     <PackageReference Include="AWSXRayRecorder.Handlers.AwsSdk" Version="2.8.3" />
     <PackageReference Include="AWSXRayRecorder.Handlers.System.Net" Version="2.7.3" />

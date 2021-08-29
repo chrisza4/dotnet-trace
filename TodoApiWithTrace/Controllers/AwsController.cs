@@ -8,6 +8,9 @@ using Amazon.XRay.Recorder.Handlers.System.Net;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Amazon.XRay.Recorder.Core;
+using Amazon.Lambda.Model;
+using System.IO;
+using System.Text.Json;
 
 namespace TodoApiWithTrace.Controllers
 {
@@ -48,5 +51,28 @@ namespace TodoApiWithTrace.Controllers
             AWSXRayRecorder.Instance.EndSubsegment();
             return "Hello tracing!";
         }
+
+        public async Task<string> InvokeAnotherLambda()
+        {
+            var client = new Amazon.Lambda.AmazonLambdaClient();
+            var invokeRequest = new InvokeRequest()
+            {
+                FunctionName = "myservice-dev-plus",
+                Payload = JsonSerializer.Serialize(new PlusRequest()
+                {
+                    a = 4,
+                    b = 5
+                }),
+                InvocationType = Amazon.Lambda.InvocationType.RequestResponse
+            };
+            var response = await client.InvokeAsync(invokeRequest);
+            using (var reader = new StreamReader(response.Payload))
+            {
+                var jsonString = reader.ReadToEnd();
+                var plusResponse = JsonSerializer.Deserialize<PlusResponse>(jsonString);
+                return "Result = " + plusResponse.result.ToString();
+            }
+        }
+
     }
 }

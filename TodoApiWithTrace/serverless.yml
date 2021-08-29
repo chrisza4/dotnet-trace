@@ -32,21 +32,21 @@ provider:
   #  stage: dev
   region: ap-southeast-1
 
-# you can add statements to the Lambda function's IAM Role here
-#  iamRoleStatements:
-#    - Effect: "Allow"
-#      Action:
-#        - "s3:ListBucket"
-#      Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "ServerlessDeploymentBucket" } ] ]  }
-#    - Effect: "Allow"
-#      Action:
-#        - "s3:PutObject"
-#      Resource:
-#        Fn::Join:
-#          - ""
-#          - - "arn:aws:s3:::"
-#            - "Ref" : "ServerlessDeploymentBucket"
-#            - "/*"
+  # you can add statements to the Lambda function's IAM Role here
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "lambda:InvokeFunction"
+      Resource: "*"
+    # - Effect: "Allow"
+    #   Action:
+    #     - "s3:PutObject"
+    #   Resource:
+    #     Fn::Join:
+    #       - ""
+    #       - - "arn:aws:s3:::"
+    #         - "Ref": "ServerlessDeploymentBucket"
+    #         - "/*"
 
 # you can define service wide environment variables here
 #  environment:
@@ -72,6 +72,10 @@ functions:
       - http:
           path: /{proxy+}
           method: ANY
+  plus:
+    handler: TodoApiWithTrace::TodoApiWithTrace.PlusHandler::Plus
+    package:
+      artifact: bin/Release/netcoreapp3.1/TodoApiWithTrace.zip
 #      - websocket: $connect
 #      - s3: ${env:BUCKET}
 #      - schedule: rate(10 minutes)

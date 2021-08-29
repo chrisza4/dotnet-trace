@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using OpenTelemetry.Trace;
+using Amazon.XRay.Recorder.Handlers.AwsSdk;
 
 namespace TodoApiWithTrace
 {
@@ -59,6 +60,8 @@ namespace TodoApiWithTrace
                 pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllers();
             });
+
+            AWSSDKHandler.RegisterXRayForAllServices();
         }
     }
 }
