@@ -51,7 +51,7 @@ namespace TodoApiWithTrace
             app.UseRouting();
 
             app.UseAuthorization();
-            app.UseXRay("App");
+
 
             app.UseEndpoints(endpoints =>
             {
@@ -61,7 +61,7 @@ namespace TodoApiWithTrace
                 endpoints.MapControllers();
             });
 
-            AWSSDKHandler.RegisterXRayForAllServices();
+            AllTheTrace.InstallXRayTracing(app);
         }
     }
 }

@@ -25,7 +25,7 @@ namespace TodoApiWithTrace.Controllers
         }
 
         [HttpGet]
-        public async Task<string> RandomUser()
+        public async Task<string> RandomUserNoTrace()
         {
             var client = new HttpClient();
             var response = await client.GetAsync("https://randomuser.me/api/");

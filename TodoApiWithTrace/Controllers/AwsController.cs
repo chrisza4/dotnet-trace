@@ -16,11 +16,6 @@ namespace TodoApiWithTrace.Controllers
 {
     public class AwsController : ControllerBase
     {
-        private static readonly ActivitySource Activity = new ActivitySource(nameof(MyController));
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
 
         private readonly ILogger<WeatherForecastController> _logger;
 
