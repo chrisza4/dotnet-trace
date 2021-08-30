@@ -33,6 +33,7 @@ namespace TodoApiWithTrace
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TodoApiWithTrace", Version = "v1" });
             });
+            
             AllTheTrace.InstallOpenTelemetryTracing(services);
         }
 
